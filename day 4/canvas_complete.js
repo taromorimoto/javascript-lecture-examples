@@ -15,6 +15,31 @@ brush.trackPosition = function(x, y) {
     this.my0 = y
 }
 
+brush.drawStar = function() {
+    ctx.lineWidth = this.stroke
+    for (var i = 0; i < 10; i++) {
+        var x = Math.random()*100 - 50
+        var y = Math.random()*100 - 50
+        x = x * Math.random()
+        y = y * Math.random()
+        line(this.mx0 + x, this.my0 + y, this.mx0 - x, this.my0 - y)
+    }
+}
+
+brush.drawOriginal = function() {
+    ctx.lineWidth = dist(this.mx1, this.my1, this.mx0, this.my0) * this.stroke
+    line(this.mx1, this.my1, this.mx0, this.my0)
+    line(this.mx1, this.my1, this.mx2, this.my2)
+}
+
+brush.draw = function() {
+    if (this.style == 'original')
+        this.drawOriginal()
+    if (this.style == 'star')
+        this.drawStar()
+}
+
+
 
 // Setup Canvas
 var canvas = document.getElementById('canvas1')
@@ -29,6 +54,7 @@ ctx.fillRect(0, 0, canvas.width, canvas.height)
 
 // Setup stroke style
 ctx.strokeStyle = 'rgba(0,0,0,0.4)'
+ctx.lineWidth = 0.5
 ctx.lineCap = 'round'
 
 // Helpers
@@ -71,31 +97,12 @@ canvas.onmouseup = function() {
 }
 
 canvas.onmousemove = function(event) {
-    
-    // Let brush object take care of tracking the mouse position
     brush.trackPosition(event.offsetX, event.offsetY)
     
     if (brush.drawing) {
-        
-        // Draw with original style brush
-        if (brush.style == 'original') {
-            ctx.lineWidth = dist(brush.mx1, brush.my1, brush.mx0, brush.my0) * brush.stroke
-            line(brush.mx1, brush.my1, brush.mx0, brush.my0)
-            line(brush.mx1, brush.my1, brush.mx2, brush.my2)
-        }
-
-        // Draw with star style brush
-        if (brush.style == 'star') {
-            ctx.lineWidth = brush.stroke
-            for (var i = 0; i < 10; i++) {
-                var x = Math.random()*100 - 50
-                var y = Math.random()*100 - 50
-                x = x * Math.random()
-                y = y * Math.random()
-                line(brush.mx0 + x, brush.my0 + y, brush.mx0 - x, brush.my0 - y)
-            }
-        }
-
+        //brush.drawOriginal()
+        //brush.drawStar()
+        brush.draw()
     }
 }
 
