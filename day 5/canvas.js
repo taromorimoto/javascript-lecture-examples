@@ -1,3 +1,10 @@
+// Setup Canvas
+var canvas = document.getElementById('canvas1')
+canvas.width = 400
+canvas.height = 400
+
+var ctx = canvas.getContext('2d')
+
 var brush = {
     stroke: 0.5,
     drawing: false,
@@ -39,15 +46,6 @@ brush.draw = function() {
     if (this.style == 'star')
         this.drawStar()
 }
-
-
-
-// Setup Canvas
-var canvas = document.getElementById('canvas1')
-var ctx = canvas.getContext('2d')
-
-canvas.width = 400
-canvas.height = 400
 
 // Clear background
 ctx.fillStyle = 'rgb(255, 255, 255)'

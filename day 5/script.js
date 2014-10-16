@@ -10,15 +10,24 @@ $(document).ready(function() {
             img.attr('src', url)
         })
     }
+
+    // Bind click for the existing default images
+    bindClick()
     
     $('#loadMore').click(function() {
+        
+        // Get urls from a JSON file that is on the same server as this scripts.js file
         $.getJSON('image-urls.json', function(data) {
+            
+            // Add images from using all urls 
             for (var i = 0; i < data.imageUrls.length; i++) {
                 $('.thumbnails').append('<img src="' + data.imageUrls[i] + '">')
             }
+            
+            // Bind click event for the loaded images
             bindClick()
         })
-    })
+    })    
     
 })
 
